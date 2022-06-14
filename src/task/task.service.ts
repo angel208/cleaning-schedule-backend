@@ -9,11 +9,23 @@ export class TaskService {
 
   async create(task: Task): Promise<Task> {
     const createdTask = new this.taskModel(task);
-    return createdTask.save();
+    return await createdTask.save();
   }
 
-  async getTasks(): Promise<Task[]> {
+  async getAll(): Promise<Task[]> {
     console.log(await this.taskModel.find().exec());
-    return this.taskModel.find().exec();
+    return await this.taskModel.find().exec();
+  }
+
+  async getById(id): Promise<Task> {
+    return this.taskModel.findById(id).exec();
+  }
+
+  async update(id, task: Task): Promise<Task> {
+    return await this.taskModel.findByIdAndUpdate(id, task, { new: true });
+  }
+
+  async delete(id): Promise<any> {
+    return await this.taskModel.findByIdAndRemove(id);
   }
 }
