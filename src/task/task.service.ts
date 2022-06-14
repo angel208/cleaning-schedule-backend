@@ -1,14 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Task } from './task.model';
-
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Task, TaskDocument } from './task.schema';
 
 @Injectable()
 export class TaskService {
-  getTasks(): Task[] {
+  constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {}
 
-    let taskList : Task[];
-    taskList = [ new Task(1,"kitchen", 3, new Date().getDate().toString()  ) ]
+  async create(task: Task): Promise<Task> {
+    const createdTask = new this.taskModel(task);
+    return createdTask.save();
+  }
 
-    return taskList;
+  async getTasks(): Promise<Task[]> {
+    console.log(await this.taskModel.find().exec());
+    return this.taskModel.find().exec();
   }
 }
