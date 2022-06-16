@@ -9,6 +9,7 @@ import {
   Param,
   HttpStatus,
   HttpCode,
+  HttpException,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './task.schema';
@@ -27,12 +28,24 @@ export class TaskController {
   @HttpCode(200)
   async findById(@Param('id') id) {
     const task = await this.taskService.getById(id);
-    return { task };
+
+    if (!task)
+      throw new HttpException(
+        'Task Not Found in our registry',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return task;
   }
 
   @Post()
   @HttpCode(201)
-  async createProduct(@Body() task: Task) {
+  async createTask(@Body() task: Task) {
+    const existingTask = await this.taskService.getByName(task.name);
+
+    if (existingTask)
+      throw new HttpException('Duplicated Task', HttpStatus.FORBIDDEN);
+
     const newTask = await this.taskService.create(task);
     return newTask;
   }
@@ -40,14 +53,30 @@ export class TaskController {
   @Put('/:id')
   @HttpCode(201)
   async update(@Param('id') id, @Body() task: Task) {
+    const existingTask = await this.taskService.getById(id);
+
+    if (!existingTask)
+      throw new HttpException(
+        'Task Not Found in our registry',
+        HttpStatus.NOT_FOUND,
+      );
+
     const updatedTask = await this.taskService.update(id, task);
-    return { updatedTask };
+    return updatedTask;
   }
 
   @Delete('/:id')
   @HttpCode(204)
   async delete(@Param('id') id) {
-    const deletedTask = await this.taskService.delete(id);
+    const existingTask = await this.taskService.getById(id);
+
+    if (!existingTask)
+      throw new HttpException(
+        'Task Not Found in our registry',
+        HttpStatus.NOT_FOUND,
+      );
+
+    await this.taskService.delete(id);
     return null;
   }
 }
