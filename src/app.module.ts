@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { TaskModule } from './task/task.module';
+import { CleaningSessionkModule } from './cleaning-session/cleaning-session.module';
 
 import { MongooseModule } from '@nestjs/mongoose';
 
@@ -11,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     TaskModule,
+    CleaningSessionkModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
