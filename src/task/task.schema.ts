@@ -9,10 +9,25 @@ export class Task {
   name: string;
 
   @Prop()
-  deepFreq: number;
+  priority: number;
 
   @Prop()
-  deepExecutionDate: string;
+  frequency_deep: number;
+
+  @Prop()
+  frequency_light: number;
+
+  @Prop()
+  duration_deep: number;
+
+  @Prop()
+  duration_light: number;
+
+  @Prop()
+  last_executed_deep: Date;
+
+  @Prop()
+  last_executed_light: Date;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);
