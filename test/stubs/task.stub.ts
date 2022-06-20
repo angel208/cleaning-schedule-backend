@@ -1,14 +1,4 @@
-class TaskDTO {
-  readonly _id: string;
-  readonly name: string;
-  readonly priority: number;
-  readonly frequency_deep: number;
-  readonly frequency_light: number;
-  readonly duration_deep: number;
-  readonly duration_light: number;
-  readonly last_executed_deep: Date;
-  readonly last_executed_light: Date;
-}
+import { TaskDTO } from '../DTO/task.dto';
 
 export const TaskDTOStub = (): TaskDTO => {
   return {
