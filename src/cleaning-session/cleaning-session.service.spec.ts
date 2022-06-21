@@ -86,7 +86,7 @@ describe('CleaningSessionService', () => {
       expect( cleaningSessionService.calculate(input, 60)).toEqual(result);
     });
 
-    it('4 - two task with less time expired are metter than one with more time expired.', () => {
+    it('4 - two task with less time expired are better than one with more time expired.', () => {
       const t1 = new TaskBuilder().frequency_deep(14).expiredBy(14).build();
       const t2 = new TaskBuilder().frequency_deep(14).expiredBy(7).build();
       const t3 = new TaskBuilder().frequency_deep(14).expiredBy(21).build();
@@ -187,7 +187,7 @@ describe('CleaningSessionService', () => {
         .build();
 
       const input = [t1, t2, t3, t4];
-      const result = [t4, t2, t1, t3];
+      const result = [t1, t2, t4, t3];
       // eslint-disable-next-line prettier/prettier
       expect( cleaningSessionService.calculate(input, undefined)).toEqual(result);
     });
@@ -210,7 +210,7 @@ describe('CleaningSessionService', () => {
         .build();
 
       const input = [t1, t2, t3];
-      const result = [t3, t2, t1];
+      const result = [t1, t3, t2];
       // eslint-disable-next-line prettier/prettier
       expect( cleaningSessionService.calculate(input, undefined)).toEqual(result);
     });
@@ -233,7 +233,7 @@ describe('CleaningSessionService', () => {
         .build();
 
       const input = [t1, t2, t3];
-      const result = [t3, t2, t1];
+      const result = [t1, t3, t2];
       // eslint-disable-next-line prettier/prettier
       expect( cleaningSessionService.calculate(input, undefined)).toEqual(result);
     });

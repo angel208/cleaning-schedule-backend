@@ -13,8 +13,8 @@ export class TaskBuilder {
       frequency_light: 7,
       duration_deep: 20,
       duration_light: 20,
-      last_executed_deep: new Date('1995-12-17'),
-      last_executed_light: new Date('1995-12-17'),
+      last_executed_deep: new Date('1995-12-17T22:18:03.374Z'),
+      last_executed_light: new Date('1995-12-17T22:18:03.374Z'),
     };
   }
 
@@ -61,26 +61,14 @@ export class TaskBuilder {
   }
 
   expiredBy(days: number): TaskBuilder {
-    const date1 = new Date(
-      new Date(
-        new Date().setDate(
-          this._task.last_executed_deep.getDate() -
-            (this._task.frequency_deep + days),
-        ),
-      ),
+    this._task.last_executed_deep.setDate(
+      this._task.last_executed_deep.getDate() -
+        (this._task.frequency_deep + days),
     );
-
-    const date2 = new Date(
-      new Date(
-        new Date().setDate(
-          this._task.last_executed_light.getDate() -
-            (this._task.frequency_deep + days),
-        ),
-      ),
+    this._task.last_executed_light.setDate(
+      this._task.last_executed_light.getDate() -
+        (this._task.frequency_light + days),
     );
-
-    this._task.last_executed_deep = date1;
-    this._task.last_executed_light = date2;
 
     return this;
   }
