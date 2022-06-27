@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Task } from 'src/task/task.schema';
-import { TaskBuilder } from '../../test/builders/task.builder';
+import { TaskBuilder } from '../task/builders/task.builder';
 
 @Injectable()
 export class CleaningSessionService {

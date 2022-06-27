@@ -1,5 +1,5 @@
 import { CleaningSessionService } from './cleaning-session.service';
-import { TaskBuilder } from '../../test/builders/task.builder';
+import { TaskBuilder } from '../task/builders/task.builder';
 
 describe('CleaningSessionService', () => {
   let cleaningSessionService: CleaningSessionService;
