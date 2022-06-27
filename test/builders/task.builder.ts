@@ -15,7 +15,16 @@ export class TaskBuilder {
       duration_light: 20,
       last_executed_deep: new Date('1995-12-17T22:18:03.374Z'),
       last_executed_light: new Date('1995-12-17T22:18:03.374Z'),
+      score: 1,
     };
+  }
+
+  defaultTask(): TaskBuilder {
+    this._task.name = 'Tiddy Up';
+    this._task.last_executed_deep = null;
+    this._task.last_executed_light = null;
+    this._task._id = null;
+    return this;
   }
 
   name(name: string): TaskBuilder {
@@ -62,14 +71,17 @@ export class TaskBuilder {
 
   expiredBy(days: number): TaskBuilder {
     this._task.last_executed_deep.setDate(
-      this._task.last_executed_deep.getDate() -
-        (this._task.frequency_deep + days),
+      this._task.last_executed_deep.getDate() - (this._task.frequency_deep + days),
     );
     this._task.last_executed_light.setDate(
-      this._task.last_executed_light.getDate() -
-        (this._task.frequency_light + days),
+      this._task.last_executed_light.getDate() - (this._task.frequency_light + days),
     );
 
+    return this;
+  }
+
+  score(score: number): TaskBuilder {
+    this._task.score = score;
     return this;
   }
 

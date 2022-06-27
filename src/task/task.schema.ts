@@ -28,6 +28,9 @@ export class Task {
 
   @Prop()
   last_executed_light: Date;
+
+  @Prop()
+  score: number;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

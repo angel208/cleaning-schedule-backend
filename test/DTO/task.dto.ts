@@ -8,4 +8,5 @@ export class TaskDTO {
   duration_light: number;
   last_executed_deep: Date;
   last_executed_light: Date;
+  score: number;
 }

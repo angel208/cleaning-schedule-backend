@@ -29,11 +29,7 @@ export class TaskController {
   async findById(@Param('id') id) {
     const task = await this.taskService.getById(id);
 
-    if (!task)
-      throw new HttpException(
-        'Task Not Found in our registry',
-        HttpStatus.NOT_FOUND,
-      );
+    if (!task) throw new HttpException('Task Not Found in our registry', HttpStatus.NOT_FOUND);
 
     return task;
   }
@@ -43,8 +39,7 @@ export class TaskController {
   async createTask(@Body() task: Task) {
     const existingTask = await this.taskService.getByName(task.name);
 
-    if (existingTask)
-      throw new HttpException('Duplicated Task', HttpStatus.FORBIDDEN);
+    if (existingTask) throw new HttpException('Duplicated Task', HttpStatus.FORBIDDEN);
 
     const newTask = await this.taskService.create(task);
     return newTask;
@@ -56,10 +51,7 @@ export class TaskController {
     const existingTask = await this.taskService.getById(id);
 
     if (!existingTask)
-      throw new HttpException(
-        'Task Not Found in our registry',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException('Task Not Found in our registry', HttpStatus.NOT_FOUND);
 
     const updatedTask = await this.taskService.update(id, task);
     return updatedTask;
@@ -71,10 +63,7 @@ export class TaskController {
     const existingTask = await this.taskService.getById(id);
 
     if (!existingTask)
-      throw new HttpException(
-        'Task Not Found in our registry',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException('Task Not Found in our registry', HttpStatus.NOT_FOUND);
 
     await this.taskService.delete(id);
     return null;
