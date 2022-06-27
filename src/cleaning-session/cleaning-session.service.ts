@@ -28,7 +28,7 @@ export class CleaningSessionService {
   }
 
   private calculateScore(task: Task): number {
-    const currentDate = this.getCurrentDate();
+    const currentDate = new Date();
     console.log('*********');
     console.log({ currentDate });
     const lastExecuted = task.last_executed_deep;
@@ -48,11 +48,6 @@ export class CleaningSessionService {
     const S = 0.7 * ((5 - task.priority) + ((5 - task.priority) * 0.4)) + 0.3 * expiredFrequencyDeltaCurved;
     console.log({ S });
     return S;
-  }
-
-  private getCurrentDate() {
-    //return new Date();
-    return new Date('1995-12-17T22:18:03.374Z');
   }
 
   private calculateDeltaCurved(x: number) {

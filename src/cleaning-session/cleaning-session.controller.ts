@@ -12,9 +12,7 @@ export class CleaningSessionController {
 
   @Get()
   @HttpCode(200)
-  async getTasks(
-    @Query('availableTime') availableTime: number,
-  ): Promise<Task[]> {
+  async getTasks(@Query('availableTime') availableTime: number): Promise<Task[]> {
     const taskList = await this.taskService.getAll();
     return this.cleaningSessionService.calculate(taskList, availableTime);
   }

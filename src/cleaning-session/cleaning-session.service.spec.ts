@@ -8,6 +8,15 @@ describe('CleaningSessionService', () => {
     cleaningSessionService = new CleaningSessionService();
   });
 
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date('1995-12-17T22:18:03.374Z'));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   describe('Cleaning Session', () => {
     it('2 - given two identical tasks with different priorities, should sort by Priority', () => {
       const t1 = new TaskBuilder().priority(2).build();
