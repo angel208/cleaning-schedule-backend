@@ -32,4 +32,12 @@ export class TaskService {
   async delete(id): Promise<any> {
     return await this.taskModel.findByIdAndRemove(id);
   }
+
+  async markAsDone(id): Promise<Task> {
+    return await this.taskModel.findByIdAndUpdate(
+      id,
+      { last_executed_deep: new Date() },
+      { new: true },
+    );
+  }
 }

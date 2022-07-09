@@ -4,12 +4,12 @@ import {
   Post,
   Put,
   Delete,
-  Res,
   Body,
   Param,
   HttpStatus,
   HttpCode,
   HttpException,
+  Patch,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './task.schema';
@@ -66,6 +66,18 @@ export class TaskController {
       throw new HttpException('Task Not Found in our registry', HttpStatus.NOT_FOUND);
 
     await this.taskService.delete(id);
+    return null;
+  }
+
+  @Patch('/:id/done')
+  @HttpCode(204)
+  async markAsDone(@Param('id') id) {
+    const existingTask = await this.taskService.getById(id);
+
+    if (!existingTask)
+      throw new HttpException('Task Not Found in our registry', HttpStatus.NOT_FOUND);
+
+    await this.taskService.markAsDone(id);
     return null;
   }
 }

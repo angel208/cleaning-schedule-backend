@@ -94,6 +94,26 @@ describe('CatsController Methods', () => {
     it('should return Not Found 404', async () => {
       await expect(taskController.delete(TaskDTOStub()._id)).rejects.toThrow(HttpException);
     });
+
+    describe('Mark Task as done', () => {
+      it('should update object', async () => {
+        await new taskModel(TaskDTOStub()).save();
+        await taskController.markAsDone(TaskDTOStub()._id);
+        await expect(
+          (
+            await taskController.findById(TaskDTOStub()._id)
+          ).last_executed_deep,
+        ).not.toBe(TaskDTOStub().last_executed_deep);
+      });
+      it('should return null', async () => {
+        await new taskModel(TaskDTOStub()).save();
+        const finishedTask = await taskController.markAsDone(TaskDTOStub()._id);
+        expect(finishedTask).toBeNull();
+      });
+      it('should return Not Found 404', async () => {
+        await expect(taskController.markAsDone(TaskDTOStub()._id)).rejects.toThrow(HttpException);
+      });
+    });
   });
 
   //   CLEANUP
