@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TaskController } from './task.controller';
-import { TaskService } from './task.service';
-import { Task, TaskSchema } from './task.schema';
+import { TaskController } from '../src/task/task.controller';
+import { TaskService } from '../src/task/task.service';
+import { Task, TaskSchema } from '../src/task/task.schema';
 
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Connection, connect, Model } from 'mongoose';
 import { getModelToken } from '@nestjs/mongoose';
 
-import { TaskDTOStub, TaskDTOStubUpdated } from '../../test/stubs/task.stub';
+import { TaskDTOStub, TaskDTOStubUpdated } from './stubs/task.stub';
 import { HttpException } from '@nestjs/common';
 
 //source https://betterprogramming.pub/testing-controllers-in-nestjs-and-mongo-with-jest-63e1b208503c
