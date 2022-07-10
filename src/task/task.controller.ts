@@ -45,7 +45,7 @@ export class TaskController {
     return newTask;
   }
 
-  @Patch('/:id')
+  @Put('/:id')
   @HttpCode(201)
   async update(@Param('id') id, @Body() task: Task) {
     const existingTask = await this.taskService.getById(id);

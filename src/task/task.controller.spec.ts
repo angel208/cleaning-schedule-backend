@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TaskController } from './task.controller';
 import { TaskService } from './task.service';
 import { HttpException } from '@nestjs/common';
-import { Task } from './task.schema';
 
 describe('Task Controller UT', () => {
   let taskController: TaskController;
@@ -43,7 +42,7 @@ describe('Task Controller UT', () => {
       expect(createdTask.name).toBe(taskStub.name);
     });
 
-    it('should return (Bad Request - 400) exception', async () => {
+    it('should return (Bad Request - 400) exception if name already exists', async () => {
       jest.spyOn(spyService, 'getByName').mockImplementationOnce(async () => taskStub);
       await expect(taskController.createTask(taskStub)).rejects.toThrow(HttpException);
     });
