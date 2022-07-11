@@ -1,21 +1,25 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { IsInt, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type TaskDocument = Task & Document;
 
 @Schema()
 export class Task {
   @Prop()
+  @ApiProperty()
   @IsNotEmpty()
   name: string;
 
   @Prop()
+  @ApiProperty()
   @IsInt()
   @IsNotEmpty()
   priority: number;
 
   @Prop()
+  @ApiProperty()
   @IsInt()
   @IsNotEmpty()
   frequency_deep: number;
@@ -24,6 +28,7 @@ export class Task {
   frequency_light: number;
 
   @Prop()
+  @ApiProperty()
   @IsInt()
   @IsNotEmpty()
   duration_deep: number;
@@ -32,6 +37,7 @@ export class Task {
   duration_light: number;
 
   @Prop()
+  @ApiProperty()
   last_executed_deep: Date;
 
   @Prop()

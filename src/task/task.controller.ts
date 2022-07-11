@@ -13,19 +13,33 @@ import {
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './task.schema';
+import {
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  OmitType,
+  ApiBody,
+} from '@nestjs/swagger';
 
+@ApiTags('Task')
 @Controller('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Get()
   @HttpCode(200)
+  @ApiOkResponse({ description: 'The list was successfully retrieved.', type: Task, isArray: true })
   async getTasks(): Promise<Task[]> {
     return await this.taskService.getAll();
   }
 
   @Get('/:id')
   @HttpCode(200)
+  @ApiOkResponse({ description: 'The task was successfully retrieved.', type: Task })
+  @ApiNotFoundResponse({ description: 'The task with the given id does not exist.' })
   async findById(@Param('id') id) {
     const task = await this.taskService.getById(id);
 
@@ -36,6 +50,9 @@ export class TaskController {
 
   @Post()
   @HttpCode(201)
+  @ApiBody({ type: OmitType(Task, ['last_executed_deep'] as const) })
+  @ApiCreatedResponse({ description: 'The task was successfully created.', type: Task })
+  @ApiForbiddenResponse({ description: 'A taks with the same name already exists.' })
   async createTask(@Body() task: Task) {
     const existingTask = await this.taskService.getByName(task.name);
 
@@ -47,6 +64,9 @@ export class TaskController {
 
   @Put('/:id')
   @HttpCode(201)
+  @ApiBody({ type: OmitType(Task, ['last_executed_deep'] as const) })
+  @ApiCreatedResponse({ description: 'The task was successfully updated.', type: Task })
+  @ApiNotFoundResponse({ description: 'The task with the given id does not exist.' })
   async update(@Param('id') id, @Body() task: Task) {
     const existingTask = await this.taskService.getById(id);
 
@@ -59,6 +79,8 @@ export class TaskController {
 
   @Delete('/:id')
   @HttpCode(204)
+  @ApiNoContentResponse({ description: 'The task was successfully deleted.' })
+  @ApiNotFoundResponse({ description: 'The task with the given id does not exist.' })
   async delete(@Param('id') id) {
     const existingTask = await this.taskService.getById(id);
 
@@ -71,6 +93,8 @@ export class TaskController {
 
   @Patch('/:id/done')
   @HttpCode(204)
+  @ApiNoContentResponse({ description: 'The task was successfully set as done.' })
+  @ApiNotFoundResponse({ description: 'The task with the given id does not exist.' })
   async markAsDone(@Param('id') id) {
     const existingTask = await this.taskService.getById(id);
 
